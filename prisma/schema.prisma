@@ -11,45 +11,75 @@ datasource db {
 }
 
 model Users {
-  id         Int       @id @default(autoincrement())
-  lastName   String
-  fistName   String
-  middleName String
-  email      String    @unique
-  password   String
-  birthday   DateTime
-  avatar     String
-  department String
-  post       String
-  phone      String
-  roles      String[]
-  accesRoles String[]
-  Awards     Awards[]
-  Cources    Cources[]
+  id          Int           @id @default(autoincrement())
+  lastName    String
+  fistName    String
+  middleName  String
+  email       String        @unique
+  password    String
+  birthday    DateTime
+  avatar      String
+  department  String
+  post        String
+  phone       String
+  mentor      String
+  mentor_tg   String
+  roles       String[]
+  accesRoles  String[]
+  UserAwards  UserAwards[]
+  UserCources UserCources[]
 
   @@index([email])
   @@map("users")
 }
 
 model Awards {
-  id        Int      @id @default(autoincrement())
-  name      String
-  dateOfEnd DateTime
-  userId    Int
-  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         Int          @id @default(autoincrement())
+  name       String
+  UserAwards UserAwards[]
 
   @@map("awards")
 }
 
+model UserAwards {
+  id      Int    @id @default(autoincrement())
+  awardId Int
+  award   Awards @relation(fields: [awardId], references: [id], onDelete: Cascade)
+  userId  Int
+  user    Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_awards")
+}
+
+model CourcesCategory {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Cources Cources[]
+
+  @@map("cources_category")
+}
+
 model Cources {
-  id         Int      @id @default(autoincrement())
-  courseName String
-  startDate  DateTime
-  doneDate   DateTime
-  required   Boolean
-  done       Boolean
-  userId     Int
-  user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             Int             @id @default(autoincrement())
+  courseName     String
+  categoryId     Int
+  category       CourcesCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  courseDuration Int
+  UserCources    UserCources[]
 
   @@map("cources")
+}
+
+model UserCources {
+  id        Int      @id @default(autoincrement())
+  courseId  Int
+  course    Cources  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  startDate DateTime
+  doneDate  DateTime
+  required  Boolean
+  done      Boolean
+  userId    Int
+  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_cources")
 }
