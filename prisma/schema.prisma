@@ -13,19 +13,19 @@ datasource db {
 model Users {
   id          Int           @id @default(autoincrement())
   lastName    String
-  fistName    String
-  middleName  String
+  firstName   String
+  middleName  String?
   email       String        @unique
   password    String
-  birthday    DateTime
-  avatar      String
-  department  String
-  post        String
-  phone       String
-  mentor      String
-  mentor_tg   String
+  birthday    DateTime?
+  avatar      String?
+  department  String?
+  post        String?
+  phone       String?
+  mentor      String?
+  mentor_tg   String?
   roles       String[]
-  accesRoles  String[]
+  accessRoles String[]
   UserAwards  UserAwards[]
   UserCources UserCources[]
 

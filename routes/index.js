@@ -2,6 +2,7 @@ const router = require('express').Router()
 const auth = require('../middlewares/auth')
 const { NotFoundError } = require('../utils/errors')
 const { login, createUser, logout } = require('../controllers/users')
+const usersRouter = require('./users')
 
 router.post('/signin', login)
 router.post('/signup', createUser)

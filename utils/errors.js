@@ -1,4 +1,5 @@
 const { DEFAULT_ERROR_MESSAGES } = require('./consts')
+const { Prisma } = require('@prisma/client')
 
 class BadRequestError extends Error {
   constructor(message = DEFAULT_ERROR_MESSAGES.BAD_REQUEST) {
@@ -43,6 +44,7 @@ class ServerError extends Error {
 }
 
 const handleError = (err, next) => {
+  console.log('Error code = ', err?.code)
   // if (
   //   err instanceof mongoose.Error.CastError ||
   //   err instanceof mongoose.Error.ValidationError
@@ -50,10 +52,13 @@ const handleError = (err, next) => {
   //   next(new BadRequestError())
   //   return
   // }
-  // if (err instanceof mongoose.Error.DocumentNotFoundError) {
-  //   next(new NotFoundError(DEFAULT_ERROR_MESSAGES.ITEM_NOT_FOUND))
-  //   return
-  // }
+  if (
+    err instanceof Prisma.PrismaClientKnownRequestError &&
+    err.code === 'P2025'
+  ) {
+    next(new NotFoundError(DEFAULT_ERROR_MESSAGES.ITEM_NOT_FOUND))
+    return
+  }
   // if (err.name === 'MongoServerError') {
   //   if (err.code === 11000) {
   //     next(new ConflictError())
