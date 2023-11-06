@@ -3,10 +3,11 @@ const helmet = require('helmet')
 const responseTime = require('response-time')
 const rateLimit = require('express-rate-limit')
 const cookieParser = require('cookie-parser')
-const { PORT, DB_PATH, BASE_URL, MAX_AUTH_ATTEMPTS } = require('./utils/config')
+const { PORT, MAX_AUTH_ATTEMPTS } = require('./utils/config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 const { USER_MESSAGE, DEFAULT_ERROR_MESSAGES } = require('./utils/consts')
 const errorsHandler = require('./middlewares/handelError')
+const routes = require('./routes')
 
 const app = express()
 
@@ -25,10 +26,11 @@ app.use(cookieParser())
 app.use(authLimiter)
 
 app.use(responseTime(requestLogger))
+app.use(routes)
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 app.use(errorLogger)
 app.use(errorsHandler)
