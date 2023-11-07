@@ -68,7 +68,7 @@ const getAllUsers = (req, res, next) =>
             award: true,
           },
         },
-        UserCources: {
+        UserCourses: {
           include: {
             course: true,
           },
@@ -80,7 +80,8 @@ const getAllUsers = (req, res, next) =>
     })
     .catch((err) => handleError(err, next))
 
-const findUser = (req, res, next, userId) => prisma.users
+const findUser = (req, res, next, userId) =>
+  prisma.users
     .findUniqueOrThrow({
       where: {
         id: userId,
@@ -91,7 +92,7 @@ const findUser = (req, res, next, userId) => prisma.users
             award: true,
           },
         },
-        UserCources: {
+        UserCourses: {
           include: {
             course: true,
           },
