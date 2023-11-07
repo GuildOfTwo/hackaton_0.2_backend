@@ -45,13 +45,10 @@ class ServerError extends Error {
 
 const handleError = (err, next) => {
   console.log('Error code = ', err?.code)
-  // if (
-  //   err instanceof mongoose.Error.CastError ||
-  //   err instanceof mongoose.Error.ValidationError
-  // ) {
-  //   next(new BadRequestError())
-  //   return
-  // }
+  if (err instanceof Prisma.PrismaClientValidationError) {
+    next(new BadRequestError())
+    return
+  }
   if (
     err instanceof Prisma.PrismaClientKnownRequestError &&
     err.code === 'P2025'

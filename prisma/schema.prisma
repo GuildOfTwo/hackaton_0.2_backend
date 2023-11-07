@@ -17,6 +17,7 @@ model Users {
   middleName  String?
   email       String        @unique
   password    String
+  firstSignIn Boolean
   birthday    DateTime?
   avatar      String?
   department  String?
