@@ -15,6 +15,7 @@ const createUser = (req, res, next) => {
     password,
     accessRoles = ['user'],
     roles = ['all'],
+    firstSignIn = true,
     ...rest
   } = req.body
   return bcrypt
@@ -28,6 +29,7 @@ const createUser = (req, res, next) => {
           roles,
           firstName,
           lastName,
+          firstSignIn,
           ...rest,
         },
       })
@@ -78,8 +80,7 @@ const getAllUsers = (req, res, next) =>
     })
     .catch((err) => handleError(err, next))
 
-const findUser = (req, res, next, userId) => {
-  return prisma.users
+const findUser = (req, res, next, userId) => prisma.users
     .findUniqueOrThrow({
       where: {
         id: userId,
@@ -102,7 +103,6 @@ const findUser = (req, res, next, userId) => {
       res.send(user)
     })
     .catch((err) => handleError(err, next))
-}
 
 const getUser = (req, res, next) => {
   const { userId } = req.params
