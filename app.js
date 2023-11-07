@@ -23,7 +23,7 @@ const authLimiter = rateLimit({
 app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
-app.use(authLimiter)
+// app.use(authLimiter)
 
 app.use(responseTime(requestLogger))
 app.use(routes)
