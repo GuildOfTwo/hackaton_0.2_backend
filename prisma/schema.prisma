@@ -28,7 +28,7 @@ model Users {
   roles       String[]
   accessRoles String[]
   UserAwards  UserAwards[]
-  UserCources UserCources[]
+  UserCourses UserCourses[]
 
   @@index([email])
   @@map("users")
@@ -52,29 +52,40 @@ model UserAwards {
   @@map("user_awards")
 }
 
-model CourcesCategory {
+model CoursesCategory {
   id      Int       @id @default(autoincrement())
   name    String
-  Cources Cources[]
+  Courses Courses[]
 
-  @@map("cources_category")
+  @@map("courses_category")
 }
 
-model Cources {
+model CourseContent {
+  id       Int     @id @default(autoincrement())
+  image    String
+  content  String
+  courseId Int
+  course   Courses @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_content")
+}
+
+model Courses {
   id             Int             @id @default(autoincrement())
   courseName     String
   categoryId     Int
-  category       CourcesCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category       CoursesCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   courseDuration Int
-  UserCources    UserCources[]
+  UserCourses    UserCourses[]
+  CourseContent  CourseContent[]
 
-  @@map("cources")
+  @@map("courses")
 }
 
-model UserCources {
+model UserCourses {
   id        Int      @id @default(autoincrement())
   courseId  Int
-  course    Cources  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course    Courses  @relation(fields: [courseId], references: [id], onDelete: Cascade)
   startDate DateTime
   doneDate  DateTime
   required  Boolean
@@ -82,5 +93,5 @@ model UserCources {
   userId    Int
   user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("user_cources")
+  @@map("user_courses")
 }
