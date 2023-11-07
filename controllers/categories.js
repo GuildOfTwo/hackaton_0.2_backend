@@ -2,7 +2,7 @@ const { prisma } = require('../utils/prisma')
 const { handleError } = require('../utils/errors')
 
 const createCategory = (req, res, next) =>
-  prisma.courcesCategory
+  prisma.coursesCategory
     .create({
       data: req.body,
     })
@@ -11,7 +11,7 @@ const createCategory = (req, res, next) =>
 
 const updateCategory = (req, res, next) => {
   const { categoryId } = req.params
-  return prisma.courcesCategory
+  return prisma.coursesCategory
     .update({
       where: {
         id: +categoryId,
@@ -23,23 +23,23 @@ const updateCategory = (req, res, next) => {
 }
 const getCategory = (req, res, next) => {
   const { categoryId } = req.params
-  return prisma.courcesCategory
+  return prisma.coursesCategory
     .findUniqueOrThrow({
       where: {
         id: +categoryId,
       },
       include: {
-        Cources: true,
+        Courses: true,
       },
     })
     .then((category) => res.send(category))
     .catch((err) => handleError(err, next))
 }
 const getAllCategories = (req, res, next) =>
-  prisma.courcesCategory
+  prisma.coursesCategory
     .findMany({
       include: {
-        Cources: true,
+        Courses: true,
       },
     })
     .then((categories) => res.send(categories))
