@@ -37,6 +37,7 @@ model Users {
 model Awards {
   id         Int          @id @default(autoincrement())
   name       String
+  image      String
   UserAwards UserAwards[]
 
   @@map("awards")
