@@ -3,12 +3,12 @@ const helmet = require('helmet')
 const responseTime = require('response-time')
 const rateLimit = require('express-rate-limit')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const { PORT, MAX_AUTH_ATTEMPTS } = require('./utils/config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 const { USER_MESSAGE, DEFAULT_ERROR_MESSAGES } = require('./utils/consts')
 const errorsHandler = require('./middlewares/handelError')
 const routes = require('./routes')
-const cors = require('cors')
 
 const app = express()
 
@@ -25,8 +25,14 @@ app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
 // app.use(authLimiter)
-app.use(cors())
-
+// app.use(cors())
+app.use(
+  cors({
+    origin: '*',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+  })
+)
 app.use(responseTime(requestLogger))
 app.use(routes)
 

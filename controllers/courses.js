@@ -22,7 +22,7 @@ const createCourse = (req, res, next) => {
 const updateCourse = (req, res, next) => {
   const { courseId } = req.params
   const { categoryId, ...rest } = req.body
-  let updateData = rest
+  const updateData = rest
   if (categoryId) updateData.category = { connect: { id: categoryId } }
   return prisma.courses
     .update({
