@@ -7,6 +7,7 @@ const categoriesRouter = require('./categories')
 const coursesRouter = require('./courses')
 const awardsRouter = require('./awards')
 const usersAwardsRouter = require('./userAwards')
+const courseContentRouter = require('./courseContent')
 
 router.post('/signin', login)
 router.post('/signup', createUser)
@@ -19,6 +20,7 @@ router.use('/categories', categoriesRouter)
 router.use('/courses', coursesRouter)
 router.use('/awards', awardsRouter)
 router.use('/user-awards', usersAwardsRouter)
+router.use('/course-content', courseContentRouter)
 
 router.use((req, res, next) => {
   next(new NotFoundError())
