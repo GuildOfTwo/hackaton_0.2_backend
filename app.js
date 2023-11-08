@@ -29,7 +29,7 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: '*',
-    allowedHeaders: 'Content-Type, Authorization',
+    allowedHeaders: 'Content-Type, Authorization, Set-Cookie',
     credentials: true,
   })
 )
