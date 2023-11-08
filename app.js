@@ -8,6 +8,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger')
 const { USER_MESSAGE, DEFAULT_ERROR_MESSAGES } = require('./utils/consts')
 const errorsHandler = require('./middlewares/handelError')
 const routes = require('./routes')
+const cors = require('cors')
 
 const app = express()
 
@@ -24,13 +25,10 @@ app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
 // app.use(authLimiter)
+app.use(cors())
 
 app.use(responseTime(requestLogger))
 app.use(routes)
-
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
 
 app.use(errorLogger)
 app.use(errorsHandler)
