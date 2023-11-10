@@ -93,6 +93,7 @@ model UserCourses {
   doneDate  DateTime?
   required  Boolean
   done      Boolean
+  scores    String?
   success   Boolean   @default(false)
   userId    Int
   user      Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
