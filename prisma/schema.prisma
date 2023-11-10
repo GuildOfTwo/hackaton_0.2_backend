@@ -25,6 +25,7 @@ model Users {
   phone       String?
   mentor      String?
   mentor_tg   String?
+  telegram    String?
   roles       String[]
   accessRoles String[]
   UserAwards  UserAwards[]
@@ -85,15 +86,16 @@ model Courses {
 }
 
 model UserCourses {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   courseId  Int
-  course    Courses  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course    Courses   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   startDate DateTime
-  doneDate  DateTime
+  doneDate  DateTime?
   required  Boolean
   done      Boolean
+  success   Boolean   @default(false)
   userId    Int
-  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("user_courses")
 }

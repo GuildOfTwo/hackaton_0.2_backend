@@ -13,7 +13,7 @@ const userCoursesRouter = require('./userCourses')
 router.post('/signin', login)
 router.post('/signup', createUser)
 
-// router.use(auth)
+router.use(auth)
 
 router.post('/signout', logout)
 router.use('/users', usersRouter)

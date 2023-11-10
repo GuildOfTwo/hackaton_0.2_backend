@@ -61,9 +61,26 @@ const getCourse = (req, res, next) => {
     .catch((err) => handleError(err, next))
 }
 
+const deleteCourse = (req, res, next) => {
+  const { courseId } = req.params
+  return prisma.courses
+    .delete({
+      where: {
+        id: +courseId,
+      },
+      include: {
+        category: true,
+        CourseContent: true,
+      },
+    })
+    .then((course) => res.send(course))
+    .catch((err) => handleError(err, next))
+}
+
 module.exports = {
   createCourse,
   updateCourse,
   getCourses,
   getCourse,
+  deleteCourse,
 }
