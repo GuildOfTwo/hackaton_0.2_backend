@@ -66,6 +66,7 @@ model CoursesCategory {
 model CourseContent {
   id       Int     @id @default(autoincrement())
   image    String
+  video    String?
   content  String
   courseId Int
   course   Courses @relation(fields: [courseId], references: [id], onDelete: Cascade)
