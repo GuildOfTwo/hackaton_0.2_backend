@@ -138,15 +138,20 @@ const login = (req, res, next) => {
     })
     .then((user) => {
       const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' })
+      // res
+      //   .cookie('jwt', token, {
+      //     maxAge: 3600000 * 24 * 7,
+      //     httpOnly: false,
+      //     sameSite: 'None',
+      //     secure: true,
+      //   })
       res
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
-          httpOnly: false,
-          sameSite: 'None',
-          secure: true,
+          httpOnly: true,
+          sameSite: true,
         })
         .send(user)
-      // .send({ message: `${USER_MESSAGE.ON_LOGIN}, ${user.lastName}` })
     })
     .catch((err) => handleError(err, next))
 }

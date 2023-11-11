@@ -4,7 +4,7 @@ const responseTime = require('response-time')
 const rateLimit = require('express-rate-limit')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const { PORT, MAX_AUTH_ATTEMPTS } = require('./utils/config')
+const { PORT, MAX_AUTH_ATTEMPTS, BASE_URL } = require('./utils/config')
 const { requestLogger, errorLogger } = require('./middlewares/logger')
 const { USER_MESSAGE, DEFAULT_ERROR_MESSAGES } = require('./utils/consts')
 const errorsHandler = require('./middlewares/handelError')
@@ -24,15 +24,24 @@ const authLimiter = rateLimit({
 app.use(helmet())
 app.use(express.json())
 app.use(cookieParser())
-// app.use(authLimiter)
-// app.use(cors())
 app.use(
   cors({
-    origin: 'http://localhost:5173',
-    allowedHeaders: 'Content-Type, Authorization, Set-Cookie',
+    origin: BASE_URL,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
     credentials: true,
   })
 )
+app.use(authLimiter)
+// app.use(cors())
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5173',
+//     allowedHeaders: 'Content-Type, Authorization, Set-Cookie',
+//     credentials: true,
+//   })
+// )
 app.use(responseTime(requestLogger))
 app.use(routes)
 
