@@ -22,7 +22,6 @@ const VALIDATION_MESSAGES = {
 const USER_MESSAGE = {
   ON_LOGIN: 'Welcome back',
   ON_LOGOUT: 'Successfully signed out',
-  DB_CONNECT: 'Connected to MongoDB',
   APP_RUN: 'App listening on port',
 }
 
