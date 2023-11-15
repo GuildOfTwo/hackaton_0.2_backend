@@ -27,6 +27,7 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: BASE_URL,
+    allowedHeaders: 'Content-Type, Authorization, Set-Cookie',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
